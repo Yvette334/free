@@ -1,5 +1,5 @@
 import { useDashboard } from "../context/Dashboard"
-import { findClientById } from "../utils/ut"
+import { getClientById } from "../utils/ut"
 import type { Project } from "../types/app"
 
 export default function ProjectList({ projects }: { projects: Project[] }) {
@@ -8,7 +8,7 @@ export default function ProjectList({ projects }: { projects: Project[] }) {
   return (
     <div className="space-y-3">
       {projects.map(p => {
-        const client = findClientById(state.clients, p.clientId)
+        const client = getClientById(state.clients, p.clientId)
         return (
           <div key={p.id} className="border p-3 rounded bg-gray-700 flex justify-between items-center">
             <div>

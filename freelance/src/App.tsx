@@ -1,41 +1,70 @@
 import { useState } from "react"
 import { DashboardProvider, useDashboard } from "./context/Dashboard"
-
-import ClientCard from "./component/ClientList"
+import ClientList from "./component/ClientList"
 import ProjectList from "./component/ProjectList"
 import DashboardStats from "./component/DashboardStats"
-import { filterProjects } from "./utils/ut"
+
+import {
+  filterProjects,
+  searchClients,
+  searchProjects,
+} from "./utils/ut"
 
 function ClientSection() {
   const { state } = useDashboard()
+  const [searchTerm, setSearchTerm] = useState("")
+
+  const filteredClients = searchTerm
+    ? searchClients(state.clients, searchTerm)
+    : state.clients
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {state.clients.map(client => (
-        <ClientCard key={client.id} client={client} />
-      ))}
+    <div className="space-y-3">
+      <h2 className="text-xl font-bold">Clients</h2>
+      <input
+        placeholder="Search client..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="bg-gray-700 text-white px-2 py-1 rounded w-full"
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {filteredClients.map((client) => (
+          <ClientList key={client.id} client={client} />
+        ))}
+      </div>
     </div>
   )
 }
 
-function FilteredProjectSection() {
+function ProjectSection() {
   const { state } = useDashboard()
-  const [statusFilter, setStatusFilter] = useState<string>("")
+  const [statusFilter, setStatusFilter] = useState("")
   const [paymentFilter, setPaymentFilter] = useState<"paid" | "unpaid" | "">("")
+  const [searchTerm, setSearchTerm] = useState("")
 
-  // Apply filter using utility
-  const filteredProjects = filterProjects(
+  let filtered = filterProjects(
     state.projects,
     statusFilter || undefined,
     paymentFilter || undefined
   )
+  if (searchTerm) {
+    filtered = searchProjects(filtered, searchTerm)
+  }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <h2 className="text-xl font-bold">Projects</h2>
-      <div className="flex gap-4 mb-3">
+
+      <div className="flex gap-3 mb-3">
+        <input
+          placeholder="Search project..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="bg-gray-700 text-white px-2 py-1 rounded w-full"
+        />
         <select
           value={statusFilter}
-          onChange={e => setStatusFilter(e.target.value)}
+          onChange={(e) => setStatusFilter(e.target.value)}
           className="bg-gray-700 text-white px-2 py-1 rounded"
         >
           <option value="">All Status</option>
@@ -46,7 +75,7 @@ function FilteredProjectSection() {
 
         <select
           value={paymentFilter}
-          onChange={e => setPaymentFilter(e.target.value as "paid" | "unpaid" | "")}
+          onChange={(e) => setPaymentFilter(e.target.value as any)}
           className="bg-gray-700 text-white px-2 py-1 rounded"
         >
           <option value="">All Payments</option>
@@ -55,7 +84,7 @@ function FilteredProjectSection() {
         </select>
       </div>
 
-      <ProjectList projects={filteredProjects} />
+      <ProjectList projects={filtered} />
     </div>
   )
 }
@@ -63,14 +92,13 @@ function FilteredProjectSection() {
 export default function App() {
   return (
     <DashboardProvider>
-      <div className="min-h-screen bg-gray-900 text-white p-8 space-y-6">
-        <h1 className="text-4xl font-bold text-center mb-8">
+      <div className="min-h-screen bg-gray-900 text-white p-6 space-y-8">
+        <h1 className="text-3xl font-bold text-center">
           Freelance Management Dashboard
         </h1>
-
         <DashboardStats />
         <ClientSection />
-        <FilteredProjectSection />
+        <ProjectSection />
       </div>
     </DashboardProvider>
   )
