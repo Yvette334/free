@@ -18,7 +18,7 @@ A mini-dashboard that displays clients, projects, and payments using TypeScript 
 
 ### How to clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/Yvette334/free.git
 cd freelance
 ```
 
@@ -59,8 +59,8 @@ freelance/
 
 ## Screenshots
 
-![Dashboard Screenshot](path/to/screenshot.png)  
+![Dashboard Screenshot](https://github.com/Yvette334/free/blob/004d79642176b52766a8972a05c299f6c0eca6ed/Screenshot%202025-11-02%20173038.png)  
 
 ## Deployment Link
 
-[Live Demo](https://your-deployment-link.com)
+[Live Demo](https://free-sand-chi.vercel.app/)
