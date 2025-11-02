@@ -1,74 +1,53 @@
-// src/context/DashboardContext.tsx
-import React, { createContext, useReducer, useContext } from "react";
-import { Client, Project, Payment } from "../types/app";
+import React, { createContext, useReducer, useContext } from "react"
+import { Client, Project, Payment } from "../types/app"
 
 type State = {
-  clients: Client[];
-  projects: Project[];
-  payments: Payment[];
-};
+  clients: Client[]
+  projects: Project[]
+  payments: Payment[]
+}
 
 type Action =
-  | { type: "ADD_PAYMENT"; payload: Payment }
-  | { type: "MARK_PROJECT_PAID"; payload: string }; // projectId
+  | { type: "MARK_PROJECT_PAID"; payload: string }
 
 const initialState: State = {
   clients: [
-    { id: "1", name: "Sarah", country: "Rwanda"},
+    { id: "1", name: "Sarah", country: "Rwanda" },
     { id: "2", name: "Uwera", country: "Musanze" },
   ],
   projects: [
-    {
-      id: "101",
-      clientId: "1",
-      title: "Website Design",
-      budget: 1000,
-      status: "in-progress",
-      paymentStatus: "unpaid",
-    },
-    {
-      id: "102",
-      clientId: "2",
-      title: "Logo Creation",
-      budget: 500,
-      status: "completed",
-      paymentStatus: "paid",
-    },
+    { id: "101", clientId: "1", title: "Website Design", budget: 1000, status: "in-progress", paymentStatus: "unpaid" },
+    { id: "102", clientId: "2", title: "Logo Creation", budget: 500, status: "completed", paymentStatus: "paid" },
   ],
   payments: [{ projectId: "102", amount: 500, date: "2025-11-01" }],
-};
+}
 
 function dashboardReducer(state: State, action: Action): State {
   switch (action.type) {
-    case "ADD_PAYMENT":
-      return {
-        ...state,
-        payments: [...state.payments, action.payload],
-      };
     case "MARK_PROJECT_PAID":
       return {
         ...state,
-        projects: state.projects.map((p) =>
+        projects: state.projects.map(p =>
           p.id === action.payload ? { ...p, paymentStatus: "paid" } : p
         ),
-      };
+      }
     default:
-      return state;
+      return state
   }
 }
 
-const DashboardContext = createContext<{
-  state: State;
-  dispatch: React.Dispatch<Action>;
-}>({ state: initialState, dispatch: () => null });
+const DashboardContext = createContext<{ state: State; dispatch: React.Dispatch<Action> }>({
+  state: initialState,
+  dispatch: () => {},
+})
 
-export const useDashboard = () => useContext(DashboardContext);
+export const useDashboard = () => useContext(DashboardContext)
 
 export const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(dashboardReducer, initialState);
+  const [state, dispatch] = useReducer(dashboardReducer, initialState)
   return (
     <DashboardContext.Provider value={{ state, dispatch }}>
       {children}
     </DashboardContext.Provider>
-  );
-};
+  )
+}
