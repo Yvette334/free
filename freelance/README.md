@@ -16,5 +16,5 @@ A simple freelance dashboard demonstrating TypeScript models, Context + useReduc
 
 ## Files
 - `src/types.ts` — data models
-- `src/store` — reducer & provider
+- `src/context` — reducer & provider
 - `src/components` — ClientCard, ProjectList, DashboardStats

@@ -2,6 +2,7 @@ export interface Client {
     id: string
     name: string
     country: string
+    email?: string
 }
 
 export interface Project{
