@@ -3,12 +3,8 @@ import { DashboardProvider, useDashboard } from "./context/Dashboard"
 import ClientList from "./component/ClientList"
 import ProjectList from "./component/ProjectList"
 import DashboardStats from "./component/DashboardStats"
-
-import {
-  filterProjects,
-  searchClients,
-  searchProjects,
-} from "./utils/ut"
+import {filterProjects, searchClients, searchProjects} from "./utils/ut"
+import PaymentList from "./component/PaymentList"
 
 function ClientSection() {
   const { state } = useDashboard()
@@ -99,6 +95,7 @@ export default function App() {
         <DashboardStats />
         <ClientSection />
         <ProjectSection />
+        <PaymentList/>
       </div>
     </DashboardProvider>
   )
