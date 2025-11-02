@@ -4,7 +4,7 @@ export interface Client {
     country: string
 }
 
-export interface Product{
+export interface Project{
     id: string
     clientId: string
     title: string
