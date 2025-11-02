@@ -6,17 +6,17 @@ export default function DashboardStats() {
   const { paid, unpaid } = countPaidVsUnpaid(state.projects)
 
   return (
-    <div className="border p-4 bg-gray-800 text-white rounded-lg flex justify-around">
+    <div className="border p-4 bg-gray-800 text-white rounded flex justify-around">
       <div>
-        <h3 className="text-lg font-bold">Total Projects</h3>
+        <h3>Total Projects</h3>
         <p>{state.projects.length}</p>
       </div>
       <div>
-        <h3 className="text-lg font-bold text-green-400">Paid</h3>
+        <h3 className="text-green-400">Paid</h3>
         <p>{paid}</p>
       </div>
       <div>
-        <h3 className="text-lg font-bold text-red-400">Unpaid</h3>
+        <h3 className="text-red-400">Unpaid</h3>
         <p>{unpaid}</p>
       </div>
     </div>
